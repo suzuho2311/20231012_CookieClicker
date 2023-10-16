@@ -58,13 +58,13 @@ void Main()
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	// ケーキのクリック円
-	const Circle cookieCircle{ 170, 300, 100 };
+	const Circle cakeCircle{ 170, 300, 100 };
 
 	// ケーキの表示サイズ（倍率）
-	double cookieScale = 1.5;
+	double cakeScale = 1.5;
 
 	// ケーキの個数
-	double cookies = 0;
+	double cakes = 0;
 
 	// 普通のケーキ屋の所有数
 	int32 cake1Count = 0;
@@ -101,7 +101,7 @@ void Main()
 			accumulatedTime -= 0.1;
 
 			// 0.1 秒分のケーキ生産を加算する
-			cookies += (cps * 0.1);
+			cakes += (cps * 0.1);
 		}
 
 		// 普通のケーキ屋の価格を計算する
@@ -114,56 +114,56 @@ void Main()
 		cake3Cost = 500 + (cake3Count * 500);
 
 		// ケーキ円上にマウスカーソルがあれば
-		if (cookieCircle.mouseOver())
+		if (cakeCircle.mouseOver())
 		{
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
 		// ケーキ円が左クリックされたら
-		if (cookieCircle.leftClicked())
+		if (cakeCircle.leftClicked())
 		{
-			cookieScale = 1.3;
-			++cookies;
+			cakeScale = 1.3;
+			++cakes;
 		}
 
 		// ケーキの表示サイズを回復する
-		cookieScale += Scene::DeltaTime();
+		cakeScale += Scene::DeltaTime();
 
-		if (1.5 < cookieScale)
+		if (1.5 < cakeScale)
 		{
-			cookieScale = 1.5;
+			cakeScale = 1.5;
 		}
 
 		// 背景を描く
 		Rect{ 0, 0, 800, 600 }.draw(Arg::top = ColorF{ 0.9, 0.5, 0.5 }, Arg::bottom = ColorF{ 1.0, 1.0, 1.0 });
 
 		// ケーキの数を整数で表示する
-		font(U"{:.0f}"_fmt(cookies)).drawAt(60, 170, 100);
+		font(U"{:.0f}"_fmt(cakes)).drawAt(60, 170, 100);
 
 		// ケーキの生産量を表示する
 		font(U"毎秒: {}"_fmt(cps)).drawAt(24, 170, 160);
 
 		// ケーキを描画する
-		texture.scaled(cookieScale).drawAt(cookieCircle.center);
+		texture.scaled(cakeScale).drawAt(cakeCircle.center);
 
 		// 普通のケーキ屋ボタン
-		if (Button(Rect{ 340, 40, 420, 100 }, cake1Emoji, font, U"普通のケーキ屋", U"C{} / 1 CPS"_fmt(cake1Cost), cake1Count, (cake1Cost <= cookies)))
+		if (Button(Rect{ 340, 40, 420, 100 }, cake1Emoji, font, U"普通のケーキ屋", U"C{} / 1 CPS"_fmt(cake1Cost), cake1Count, (cake1Cost <= cakes)))
 		{
-			cookies -= cake1Cost;
+			cakes -= cake1Cost;
 			++cake1Count;
 		}
 
 		// おいしいケーキ屋ボタン
-		if (Button(Rect{ 340, 160, 420, 100 }, cake2Emoji, font, U"おいしいケーキ屋", U"C{} / 10 CPS"_fmt(cake2Cost), cake2Count, (cake2Cost <= cookies)))
+		if (Button(Rect{ 340, 160, 420, 100 }, cake2Emoji, font, U"おいしいケーキ屋", U"C{} / 10 CPS"_fmt(cake2Cost), cake2Count, (cake2Cost <= cakes)))
 		{
-			cookies -= cake2Cost;
+			cakes -= cake2Cost;
 			++cake2Count;
 		}
 
 		// 大人気のケーキ屋ボタン
-		if (Button(Rect{ 340, 280, 420, 100 }, cake3Emoji, font, U"大人気のケーキ屋", U"C{} / 50 CPS"_fmt(cake3Cost), cake3Count, (cake3Cost <= cookies)))
+		if (Button(Rect{ 340, 280, 420, 100 }, cake3Emoji, font, U"大人気のケーキ屋", U"C{} / 50 CPS"_fmt(cake3Cost), cake3Count, (cake3Cost <= cakes)))
 		{
-			cookies -= cake3Cost;
+			cakes -= cake3Cost;
 			++cake3Count;
 		}
 	}
