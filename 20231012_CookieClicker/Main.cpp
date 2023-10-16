@@ -46,13 +46,13 @@ void Main()
 	const Texture texture{ U"🍰"_emoji };
 
 	// 普通のケーキ屋の絵文字
-	const Texture farmEmoji{ U"🏠"_emoji };
+	const Texture cake1Emoji{ U"🏠"_emoji };
 
 	// おいしいケーキ屋の絵文字
-	const Texture factoryEmoji{ U"🏡"_emoji };
+	const Texture cake2Emoji{ U"🏡"_emoji };
 
 	// 大人気のケーキ屋の絵文字
-	const Texture cakeEmoji{ U"🏘"_emoji };
+	const Texture cake3Emoji{ U"🏘"_emoji };
 
 	// フォント
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
@@ -67,22 +67,22 @@ void Main()
 	double cookies = 0;
 
 	// 普通のケーキ屋の所有数
-	int32 farmCount = 0;
+	int32 cake1Count = 0;
 
 	// おいしいケーキ屋の所有数
-	int32 factoryCount = 0;
+	int32 cake2Count = 0;
 
 	// 大人気のケーキ屋の所有数
-	int32 cakeCount = 0;
+	int32 cake3Count = 0;
 
 	// 普通のケーキ屋の価格
-	int32 farmCost = 10;
+	int32 cake1Cost = 10;
 
 	// おいしいケーキ屋の価格
-	int32 factoryCost = 100;
+	int32 cake2Cost = 100;
 
 	// 大人気のケーキ屋の価格
-	int32 cakeCost = 500;
+	int32 cake3Cost = 500;
 
 	// ゲームの経過時間の蓄積
 	double accumulatedTime = 0.0;
@@ -90,7 +90,7 @@ void Main()
 	while (System::Update())
 	{
 		// ケーキの毎秒の生産量 (cookies per second) を計算する
-		const int32 cps = (farmCount + (factoryCount * 10) + (cakeCount * 50));
+		const int32 cps = (cake1Count + (cake2Count * 10) + (cake3Count * 50));
 
 		// ゲームの経過時間を加算する
 		accumulatedTime += Scene::DeltaTime();
@@ -105,13 +105,13 @@ void Main()
 		}
 
 		// 普通のケーキ屋の価格を計算する
-		farmCost = 10 + (farmCount * 10);
+		cake1Cost = 10 + (cake1Count * 10);
 
 		// おいしいケーキ屋の価格を計算する
-		factoryCost = 100 + (factoryCount * 100);
+		cake2Cost = 100 + (cake2Count * 100);
 
 		// 大人気のケーキ屋の価格を計算する
-		cakeCost = 500 + (cakeCount * 500);
+		cake3Cost = 500 + (cake3Count * 500);
 
 		// ケーキ円上にマウスカーソルがあれば
 		if (cookieCircle.mouseOver())
@@ -147,24 +147,24 @@ void Main()
 		texture.scaled(cookieScale).drawAt(cookieCircle.center);
 
 		// 普通のケーキ屋ボタン
-		if (Button(Rect{ 340, 40, 420, 100 }, farmEmoji, font, U"普通のケーキ屋", U"C{} / 1 CPS"_fmt(farmCost), farmCount, (farmCost <= cookies)))
+		if (Button(Rect{ 340, 40, 420, 100 }, cake1Emoji, font, U"普通のケーキ屋", U"C{} / 1 CPS"_fmt(cake1Cost), cake1Count, (cake1Cost <= cookies)))
 		{
-			cookies -= farmCost;
-			++farmCount;
+			cookies -= cake1Cost;
+			++cake1Count;
 		}
 
 		// おいしいケーキ屋ボタン
-		if (Button(Rect{ 340, 160, 420, 100 }, factoryEmoji, font, U"おいしいケーキ屋", U"C{} / 10 CPS"_fmt(factoryCost), factoryCount, (factoryCost <= cookies)))
+		if (Button(Rect{ 340, 160, 420, 100 }, cake2Emoji, font, U"おいしいケーキ屋", U"C{} / 10 CPS"_fmt(cake2Cost), cake2Count, (cake2Cost <= cookies)))
 		{
-			cookies -= factoryCost;
-			++factoryCount;
+			cookies -= cake2Cost;
+			++cake2Count;
 		}
 
 		// 大人気のケーキ屋ボタン
-		if (Button(Rect{ 340, 280, 420, 100 }, cakeEmoji, font, U"大人気のケーキ屋", U"C{} / 50 CPS"_fmt(cakeCost), cakeCount, (cakeCost <= cookies)))
+		if (Button(Rect{ 340, 280, 420, 100 }, cake3Emoji, font, U"大人気のケーキ屋", U"C{} / 50 CPS"_fmt(cake3Cost), cake3Count, (cake3Cost <= cookies)))
 		{
-			cookies -= cakeCost;
-			++cakeCount;
+			cookies -= cake3Cost;
+			++cake3Count;
 		}
 	}
 }
